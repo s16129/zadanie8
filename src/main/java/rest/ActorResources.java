@@ -10,6 +10,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import domain.services.ActorMovieService;
 import domain.services.ActorService;
 import domain.services.MovieService;
 import domain.Actor;
@@ -22,6 +23,7 @@ import java.util.List;
 public class ActorResources {
 	private MovieService mdb = ApplicationConfig.movieService;
 	private ActorService adb = ApplicationConfig.actorService;
+	private ActorMovieService amdb = ApplicationConfig.actorMovieService;
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
@@ -50,22 +52,7 @@ public class ActorResources {
 			return Response.status(404).build(); 
 		}
 		
-		if(actor.getMovies() == null){
-			actor.setMovies(new ArrayList<Movie>());
-		}
-		
-		if(movie.getActors() == null){
-			movie.setActors(new ArrayList<Actor>());
-		}
-		
-		for(Movie m : actor.getMovies()){
-			if(m.getId() == movie.getId())
-				return Response.status(409).build();
-		}
-		 
-		
-		movie.getActors().add(actor);
-		actor.getMovies().add(movie);
+		amdb.insertPair(actor, movie);
 		
 		return Response.ok().build();
 	}
@@ -90,10 +77,10 @@ public class ActorResources {
 		if(result==null){
 			return null;
 		}
-		if(result.getMovies()==null){
-			result.setMovies(new ArrayList<Movie>());
-		}
-		return result.getMovies();
+		
+		List<Movie> movies = amdb.getMoviesForActors(result);
+		
+		return movies;
 	}
 
 }

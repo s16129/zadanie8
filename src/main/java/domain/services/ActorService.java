@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.ArrayList;
 
 import domain.Actor;
-import domain.Movie;
 
 public class ActorService {
 	
@@ -22,13 +21,6 @@ public class ActorService {
 			}
 		}
 		return null;
-	}
-	
-	public List<Actor> getByMovie(Movie m){
-		if(m == null){
-			return null;
-		}
-		return m.getActors();
 	}
 	
 	public void add(Actor a){

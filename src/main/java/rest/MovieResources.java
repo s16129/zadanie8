@@ -11,6 +11,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import domain.services.ActorMovieService;
 import domain.services.CommentService;
 import domain.services.RateService;
 import domain.Rate;
@@ -27,6 +28,7 @@ public class MovieResources {
 	private MovieService db = ApplicationConfig.movieService;
 	private CommentService cdb = ApplicationConfig.commentService;
 	private RateService rdb = ApplicationConfig.rateService;
+	private ActorMovieService amdb = ApplicationConfig.actorMovieService;
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
@@ -129,16 +131,17 @@ public class MovieResources {
 	@GET
 	@Path("/{id}/actors")
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<Actor> getActors(@PathParam("id") int movieId){
+	public List<Actor> getMovies(@PathParam("id") int movieId){
 		Movie result = db.get(movieId);
 		if(result==null){
 			return null;
 		}
-		if(result.getActors()==null){
-			result.setActors(new ArrayList<Actor>());
-		}
-		return result.getActors();
+		
+		List<Actor> actors = amdb.getActorsForMovie(result);
+		
+		return actors;
 	}
+	
 	
 	/*
 	

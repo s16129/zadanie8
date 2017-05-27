@@ -3,7 +3,6 @@ package domain.services;
 import java.util.List;
 import java.util.ArrayList;
 
-import domain.Actor;
 import domain.Movie;
 
 public class MovieService {
@@ -22,13 +21,6 @@ public class MovieService {
 			}
 		}
 		return null;
-	}
-	
-	public List<Movie> getByActor(Actor a){
-		if(a == null){
-			return null;
-		}
-		return a.getMovies();
 	}
 	
 	public void add(Movie m){

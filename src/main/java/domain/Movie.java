@@ -12,8 +12,7 @@ public class Movie {
 	private String director;
 	private String writer;
 	private String producer;
-	
-	private List<Actor> actors;
+
 	private List<Rate> rating;
 	private List<Comment> comments;
 	
@@ -116,13 +115,5 @@ public class Movie {
 			this.rating = new ArrayList<Rate>();
 		}
 		this.rating.add(rate);
-	}
-	
-	public List<Actor> getActors(){
-		return actors;
-	}
-	
-	public void setActors(List<Actor> actors){
-		this.actors = actors;
 	}
 }
